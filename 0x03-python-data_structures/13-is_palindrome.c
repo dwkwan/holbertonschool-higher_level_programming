@@ -13,7 +13,7 @@ int is_palindrome(listint_t **head)
 	listint_t *slow = *head, *fast = *head;
 	int palindrome = 1;
 
-	if (*head)
+	if (!*head)
 		return (1);
 	while (fast->next && fast->next->next)
 	{
