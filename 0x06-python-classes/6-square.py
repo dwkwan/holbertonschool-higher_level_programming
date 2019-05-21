@@ -14,7 +14,7 @@ class Square:
         size (int): size for __size attribute of class instance
         """
         self.size = size
-        self.position = position
+        self.__position = position
 
     def area(self):
         """Calculates the area based on size of square
