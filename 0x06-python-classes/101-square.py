@@ -69,4 +69,16 @@ class Square:
 
     def __repr__(self):
         """Prints the value of an instance of the Square class"""
-        return str(self.my_print())
+        newstring = ""
+        if self.__size > 0:
+            for row in range(self.__position[1]):
+                newstring += "\n"
+            for row in range(self.__size):
+                for column in range(self.__position[0]):
+                    newstring += " "
+                for column in range(self.__size):
+                    newstring += "#"
+                newstring += "\n"
+        else:
+            newstring += '\n'
+        return newstring[:-1]
