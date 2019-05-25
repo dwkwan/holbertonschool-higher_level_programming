@@ -41,6 +41,10 @@ TypeError: size must be an integer
 Traceback (most recent call last):
 TypeError: size must be an integer
 
+>>> print_square(float('nan'))
+Traceback (most recent call last):
+TypeError: size must be an integer
+
 
 Raise exception if size is a float and less than zero
 >>> print_square(-1.5)
