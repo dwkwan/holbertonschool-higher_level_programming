@@ -23,10 +23,10 @@ integers/floats")
 integers/floats")
     for row in matrix:
         for i in row:
-            if (type(i) != int and type(i) != float):
+            if (type(i) != int and type(i) != float) or i != i:
                 raise TypeError("matrix must be a matrix (list of lists) of\
  integers/floats")
-    if type(div) != int:
+    if (type(div) != int and type(div) != float) or div != div:
         raise TypeError("div must be a number")
     if div == 0:
         raise ZeroDivisionError("division by zero")
