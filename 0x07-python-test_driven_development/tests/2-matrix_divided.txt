@@ -1,0 +1,100 @@
+This doctest checks a function that divides all elemenhts of a matrix
+
+Import module
+>>> matrix_divided = __import__('2-matrix_divided').matrix_divided
+
+Correct output for positive numbers
+>>> matrix = [
+...     [1, 2, 3],
+...     [4, 5, 6]
+... ]
+>>> matrix_divided(matrix, 3)
+[[0.33, 0.67, 1.0], [1.33, 1.67, 2.0]]
+
+
+Doesn't modify original matrix
+>>> matrix = [
+...     [1, 2, 3],
+...     [4, 5, 6]
+... ]
+>>> matrix_divided(matrix, 3) ; matrix
+[[0.33, 0.67, 1.0], [1.33, 1.67, 2.0]]
+[[1, 2, 3], [4, 5, 6]]
+
+
+
+
+Raise error for non list type argument for matrix:
+>>> matrix_divided(1, 3)
+Traceback (most recent call last):
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+
+Raise error for non-list elements of matrix:
+>>> matrix_divided([[1],(2, 3)], 3)
+Traceback (most recent call last):
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+
+Raise error for empty matrix
+>>> matrix_divided([[],[]], 3)
+Traceback (most recent call last):
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+
+Raise error for inconsistent row size
+>>> matrix = [
+...     [1, 2, 3],
+...     [4, 5]
+... ]
+>>> matrix_divided(matrix, 3)
+Traceback (most recent call last):
+TypeError: Each row of the matrix must have the same size
+
+
+Raise exception if divisor is not a number:
+>>> matrix_divided(matrix, "foo")
+Traceback (most recent call last):
+TypeError: div must be a number
+
+
+Raise exception if divisor is zero:
+>>> matrix_divided([[1],[4]], 0)
+Traceback (most recent call last):
+ZeroDivisionError: division by zero
+
+
+Raise exception if lists are empty:
+>>> matrix = [[],[]] ; matrix_divided(matrix, 3)
+Traceback (most recent call last):
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+Raise error for non-list elements of lists:
+>>> matrix_divided([[1, 'a'],[2, 2]], 3)
+Traceback (most recent call last):
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+
+Test division by floats:
+>>> matrix_divided([[2, 2], [2, 2]], 2)
+[[1.0, 1.0], [1.0, 1.0]]
+
+
+Test division by negative numbers:
+>>> matrix_divided([[2, 2], [2, 2]], -2)
+[[-1.0, -1.0], [-1.0, -1.0]]
+
+Test division by infinity:
+>>> matrix_divided ([[2, 2], [2, 2]],float('inf'))
+Traceback (most recent call last):
+TypeError: div must be a number
+
+Test for division by nan
+>>> matrix_divided([[2, 2], [2, 2]],float('nan'))
+Traceback (most recent call last):
+TypeError: div must be a number
+
+Test for nan in matrix
+>>> matrix_divided([[float('nan'), 2], [2, 2]], 2)
+Traceback (most recent call last):
+TypeError: matrix must be a matrix (list of lists) of integers/floats

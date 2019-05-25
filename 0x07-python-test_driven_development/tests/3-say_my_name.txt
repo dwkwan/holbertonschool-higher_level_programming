@@ -1,0 +1,56 @@
+This doctest checks a function that prints My name is <first name> <last name>
+Import module
+>>> say_my_name = __import__('3-say_my_name').say_my_name
+
+
+First and Last Name
+>>> say_my_name("John", "Smith")
+My name is John Smith
+
+>>> say_my_name("Walter", "White")
+My name is Walter White
+
+
+Only First Name:
+>>> say_my_name("Bob")
+My name is Bob 
+
+Raise exception if first name is not string
+>>> say_my_name(7, "Smith")
+Traceback (most recent call last):
+TypeError: first_name must be a string
+
+
+Raise exception if second name is not string
+>>> say_my_name("John", 7)
+Traceback (most recent call last):
+TypeError: last_name must be a string
+
+
+Raise exception if first name and second name are not strings
+>>> say_my_name(7, 7)
+Traceback (most recent call last):
+TypeError: first_name must be a string
+
+
+Empty first string
+>>> say_my_name("", "Smith")
+My name is  Smith
+
+
+Empty second string
+>>> say_my_name("John", "")
+My name is John 
+
+
+Empty first and second string
+>>> say_my_name("", "")
+My name is  
+
+Empty first and second string
+>>> say_my_name("")
+My name is  
+
+Multiple leading and trailing spaces
+>>> say_my_name(" ? ",)
+My name is  ?  

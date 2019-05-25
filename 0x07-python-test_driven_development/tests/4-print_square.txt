@@ -1,0 +1,64 @@
+This doctest checks a function that prints a square with the character #
+Import module
+>>> print_square = __import__('4-print_square').print_square
+
+Prints a square
+>>> print_square(4)
+####
+####
+####
+####
+
+>>> print_square(10)
+##########
+##########
+##########
+##########
+##########
+##########
+##########
+##########
+##########
+##########
+
+>>> print_square(1)
+#
+
+>>> print_square(0)
+
+Raise exception if size is not an int
+>>> print_square("Foo")
+Traceback (most recent call last):
+TypeError: size must be an integer
+
+
+Raise exception if size is a float
+>>> print_square(1.5)
+Traceback (most recent call last):
+TypeError: size must be an integer
+
+>>> print_square(10.0)
+Traceback (most recent call last):
+TypeError: size must be an integer
+
+
+Raise exception if size is a float and less than zero
+>>> print_square(-1.5)
+Traceback (most recent call last):
+TypeError: size must be an integer
+
+
+Raise exception if printing square with negative size
+>>> print_square(-1)
+Traceback (most recent call last):
+ValueError: size must be >= 0
+
+Test for size of infinity
+>>> print_square(float('inf'))
+Traceback (most recent call last):
+TypeError: size must be an integer
+
+Test for size of nan
+>>> print_square(float('nan'))
+Traceback (most recent call last):
+TypeError: size must be an integer
