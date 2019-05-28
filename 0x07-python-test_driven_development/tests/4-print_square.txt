@@ -26,6 +26,11 @@ Prints a square
 
 >>> print_square(0)
 
+Raise exception if missing argument
+>>> print_square()
+Traceback (most recent call last):
+TypeError: print_square() missing 1 required positional argument: 'size'
+
 Raise exception if size is not an int
 >>> print_square("Foo")
 Traceback (most recent call last):
