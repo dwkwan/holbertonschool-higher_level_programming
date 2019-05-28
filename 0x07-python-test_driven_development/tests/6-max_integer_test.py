@@ -35,6 +35,9 @@ class TestMaxInteger(unittest.TestCase):
     def test_max_True(self):
         with self.assertRaises(TypeError):
             max_integer(True)
+    """This function tests for "list is empty" exists"""
+    def test_emptylist(self):
+        self.assertEqual(max_integer([]), None)
 
 if __name__ == '__main__':
     unittest.main()
