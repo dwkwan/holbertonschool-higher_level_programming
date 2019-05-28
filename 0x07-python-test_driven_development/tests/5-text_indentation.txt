@@ -14,13 +14,12 @@ Correct output for text indentation
 >>> text_indentation("\n")
 <BLANKLINE>
 
->>> text_indentation(“Hello:\n\nHolberton.”)
+>>> text_indentation("""Hello:\n\nHolberton.""")
 Hello:
-<BLANKLINE>
-<BLANKLINE>
 <BLANKLINE>
 Holberton.
 <BLANKLINE>
+
 
 >>> text_indentation("?\n")
 ?
