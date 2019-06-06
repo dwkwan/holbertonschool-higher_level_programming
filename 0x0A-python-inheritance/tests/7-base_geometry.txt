@@ -1,0 +1,56 @@
+This doctest checks a script that creates a BaseGeometry class.
+Import the module
+>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+
+Create class instqance
+>>> bg = BaseGeometry()
+
+Check that you can pass in a string and int without raised error
+>>> bg.integer_validator("my_int", 12)
+
+Check that you can pass in a string and int without raised error
+>>> bg.integer_validator("width", 89)
+
+Check that passing in two strings throws a TypeError
+>>> try:
+...     bg.integer_validator("name", "John")
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[TypeError] name must be an integer
+
+Check that passing in value equal to 0 throws a ValueError
+>>> try:
+...     bg.integer_validator("age", 0)
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[ValueError] age must be greater than 0
+
+
+Check that passing in value equal to  0 throws a ValueError
+>>> try:
+...     bg.integer_validator("distance", -4)
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[ValueError] distance must be greater than 0
+
+
+Check that call to area method raises an Exception
+
+>>> bg.area()
+Traceback (most recent call last):
+Exception: area() is not implemented
+
+Check that missing one argument doesn't execute
+>>> bg.integer_validator("age")
+Traceback (most recent call last):
+TypeError: integer_validator() missing 1 required positional argument: 'value'
+
+Check that missing two arguments doesn't execute
+>>> bg.integer_validator()
+Traceback (most recent call last):
+TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
+
+Check that extra arguments doesn't execute
+>>> bg.integer_validator("Hello", 7, 8)
+Traceback (most recent call last):
+TypeError: integer_validator() takes 3 positional arguments but 4 were given
