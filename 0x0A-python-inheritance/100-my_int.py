@@ -14,5 +14,5 @@ class MyInt(int):
         return int.__ne__(self, other)
 
     def __ne__(self, other):
-        """Swaps the eq builtin"""
+        """Swaps the ne builtin"""
         return int.__eq__(self, other)
