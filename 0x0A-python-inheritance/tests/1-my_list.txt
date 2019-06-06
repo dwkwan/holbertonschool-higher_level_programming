@@ -13,7 +13,7 @@ Traceback (most recent call last):
 TypeError: 'int' object is not iterable
 
 
-Check that sorted list printed correctly
+Check that list printed correctly
 >>> my_list = MyList()
 >>> my_list.append(1)
 >>> my_list.append(4)
@@ -30,6 +30,23 @@ Check that sorted list printed correctly
 Check that list is unmodified after print_sorted call
 >>> print(my_list)
 [1, 4, 2, 3, 5]
+
+Check that pre-sorted list is printed correctly
+>>> my_list = MyList()
+>>> my_list.append(1)
+>>> my_list.append(2)
+>>> my_list.append(3)
+>>> print(my_list)
+[1, 2, 3]
+
+Check that pre-sorted list is printed correctly with print_sorted
+>>> my_list = MyList()
+>>> my_list.append(1)
+>>> my_list.append(2)
+>>> my_list.append(3)
+>>> my_list.print_sorted()
+[1, 2, 3]
+
 
 Check that negative numbers may be added to list
 >>> my_list = MyList()
