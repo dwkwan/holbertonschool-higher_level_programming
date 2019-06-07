@@ -5,6 +5,30 @@ Import the module
 Create class instqance
 >>> bg = BaseGeometry()
 
+Test different data types
+>>> bg.integer_validator("age",(4,))
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+>>> bg.integer_validator("age",[3])
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+>>> bg.integer_validator("age",True)
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+
+>>> bg.integer_validator("age",{3, 4})
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+>>> bg.integer_validator("age",None)
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+
+
 Check that you can pass in a string and int without raised error
 >>> bg.integer_validator("my_int", 12)
 
