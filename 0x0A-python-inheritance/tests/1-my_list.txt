@@ -2,6 +2,12 @@ This doctest checks a script that creates a Mylist class.
 Import the module
 >>> MyList = __import__('1-my_list').MyList
 
+Check print_sorted with empty list
+>>> my_list = MyList()
+>>> my_list.print_sorted()
+[]
+
+
 Check that object can be created
 >>> my_list = MyList()
 >>> my_list
