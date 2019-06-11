@@ -476,3 +476,29 @@ on"""
         with self.assertRaises(TypeError) as e:
             r1 = Rectangle(1, 2, 3, 4, 5, 6)
         self.assertEqual(str(e.exception), '__init__() takes from 3 to 6 positional arguments but 7 were given')
+
+
+    def test_to_dictionary(self):
+        """This function tests the to_dictionary function"""
+        r1 = Rectangle(10, 2, 1, 9)
+        r1_dictionary = r1.to_dictionary()
+        self.assertEqual(r1_dictionary, {'x': 1, 'y': 9, 'id': 1, 'height': 2, 'width': 10})
+
+    def test_updatewithdict(self):
+        """This function tests the to_dictionary function"""
+        r1 = Rectangle(10, 2, 3, 9)
+        r1_dictionary = r1.to_dictionary()
+        r2 = Rectangle(1, 1)
+        r2.update(**r1_dictionary)
+        self.assertEqual(r2.width, 10)
+        self.assertEqual(r2.height, 2)
+        self.assertEqual(r2.x, 3)
+        self.assertEqual(r2.y, 9)
+
+    def test_updatewithdictionarybycomparingdictionaries(self):
+        """This function tests the to_dictionary function"""
+        r1 = Rectangle(10, 2, 1, 9)
+        r1_dictionary = r1.to_dictionary()
+        r2 = Rectangle(1, 1)
+        r2.update(**r1_dictionary)
+        self.assertEqual(r1.__dict__, r2.__dict__)
