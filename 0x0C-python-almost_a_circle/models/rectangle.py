@@ -45,14 +45,24 @@ class Rectangle(Base):
         """Updates attributes"""
         attrs = ["id", "width", "height", "x", "y"]
         count = len(args)
-        if all(type(x) is int for x in args):
-            for i in range(count):
-                setattr(self, attrs[i], args[i])
-        if count < 1:
+
+        if not args or count < 1:
             for key, value in kwargs.items():
                 for i in range(len(attrs)):
                     if key == attrs[i] and type(value) == int:
                         setattr(self, attrs[i], value)
+        elif args and  all(type(x) is int for x in args):
+            for i in range(count):
+                setattr(self, attrs[i], args[i])
+
+    def to_dictionary(self):
+        """Returns the dictionary representation of the Rectangle"""
+        olddict = self.__dict__.copy()
+        newdict = {}
+        for i in olddict:
+            newkey = i.replace('_Rectangle__', "")
+            newdict[newkey] = self.__dict__[i]
+        return newdict
 
     @property
     def width(self):
@@ -63,7 +73,7 @@ class Rectangle(Base):
     def width(self, value):
         """Sets width of class instance"""
         if type(value) is not int:
-            raise TypeError("width must be an inteeger")
+            raise TypeError("width must be an integer")
         if value <= 0:
             raise ValueError("width must be > 0")
         self.__width = value
@@ -77,7 +87,7 @@ class Rectangle(Base):
     def height(self, value):
         """Sets height of class instance"""
         if type(value) is not int:
-            raise TypeError("height must be an inteeger")
+            raise TypeError("height must be an integer")
         if value <= 0:
             raise ValueError("height must be > 0")
         self.__height = value
@@ -91,7 +101,7 @@ class Rectangle(Base):
     def x(self, value):
         """Sets x of class instance"""
         if type(value) is not int:
-            raise TypeError("x must be an inteeger")
+            raise TypeError("x must be an integer")
         if value < 0:
             raise ValueError("x must be >= 0")
         self.__x = value
@@ -105,7 +115,7 @@ class Rectangle(Base):
     def y(self, value):
         """Sets y of class instance"""
         if type(value) is not int:
-            raise TypeError("y must be an inteeger")
+            raise TypeError("y must be an integer")
         if value < 0:
             raise ValueError("y must be >= 0")
         self.__y = value
