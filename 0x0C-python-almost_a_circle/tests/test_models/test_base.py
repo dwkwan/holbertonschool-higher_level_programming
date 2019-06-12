@@ -173,3 +173,35 @@ class TestBaseClass(unittest.TestCase):
         self.assertEqual(list_rectangles_output[1].height,  r2.height)
         self.assertEqual(list_rectangles_output[1].x,  r2.x)
         self.assertEqual(list_rectangles_output[1].y,  r2.y)
+
+    def test_save_to_filewithsquare(self):
+        """This function tests the save_to_file func with None argument"""
+        Base.reset_objects()
+        s1 = Square(10, 7, 2, 8)
+        s2 = Square(2, 4)
+        Square.save_to_file([s1, s2])
+        with open("Square.json", "r") as file:
+            str = file.read()
+        self.assertEqual(len(str), 77)
+
+    def test_save_to_filewithrec(self):
+        """This function tests the save_to_file func with None argument"""
+        Base.reset_objects()
+        r1 = Rectangle(10, 7, 2, 8)
+        r2 = Rectangle(2, 4)
+        Rectangle.save_to_file([r1, r2])
+        with open("Rectangle.json", "r") as file:
+            str = file.read()
+        self.assertEqual(len(str), 105)
+
+    def test_to_json_stringwithmultipledicts(self):
+        """This function tests the to_json_string func"""
+        Base.reset_objects()
+        list_dictionaries = []
+        r1 = Rectangle(10, 7, 2, 8)
+        r2 = Rectangle(9, 3, 1, 7)
+        list_dictionaries.append(r1.to_dictionary())
+        list_dictionaries.append(r2.to_dictionary())
+        json_dictionary = Base.to_json_string(list_dictionaries)
+        self.assertEqual(len(json_dictionary), 105)
+        self.assertEqual(type(json_dictionary), str)
