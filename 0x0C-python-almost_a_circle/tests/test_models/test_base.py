@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+d#!/usr/bin/python3
 """Unittest for Base class"""
 
 import json
@@ -24,7 +24,7 @@ class TestBaseClass(unittest.TestCase):
         self.assertEqual(b2.id, 2)
         self.assertEqual(b3.id, 3)
     def test_instancecreationwithid(self):
-        """This function tests for one instance creation with id"""
+        """This function tests for 1 instance creation with id"""
         Base.reset_objects()
         b1 = Base(12)
         self.assertEqual(b1.id, 12)
