@@ -39,6 +39,7 @@ class Rectangle(Base):
             print()
 
     def __str__(self):
+        """Returns the informal representation of the object"""
         return"[Rectangle] ({:d}) {:d}/{:d} - {:d}/{:d}".format(
             self.id, self.__x, self.__y, self.__width, self.__height)
 
