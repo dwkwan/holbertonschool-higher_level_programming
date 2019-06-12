@@ -8,6 +8,7 @@ from models.base import Base
 import io
 import contextlib
 
+
 class TestBaseClass(unittest.TestCase):
     """This class allows for testing of Base class"""
 
@@ -27,21 +28,29 @@ class TestBaseClass(unittest.TestCase):
         Rectangle.reset_objects()
         with self.assertRaises(TypeError) as e:
             r1 = Rectangle()
-        self.assertEqual(str(e.exception), "__init__() missing 2 required positional arguments: 'width' and 'height'")
+        self.assertEqual(
+            str(e.exception),
+            "__init__() missing 2 required positional arguments: 'width' and" +
+            " 'height'")
 
     def test_errorfor1argument(self):
         """This function tests that Typeerror is thrown when 1 argument"""
         Rectangle.reset_objects()
         with self.assertRaises(TypeError) as e:
             r1 = Rectangle(1)
-        self.assertEqual(str(e.exception), "__init__() missing 1 required positional argument: 'height'")
+        self.assertEqual(
+            str(e.exception),
+            "__init__() missing 1 required positional argument: 'height'")
 
     def test_errorfortoomanyarguments(self):
-        """This function tests that Valueerror is thrown when extra arguments"""
+        """This function tests that Valueerror is thrown when extra args"""
         Rectangle.reset_objects()
         with self.assertRaises(TypeError) as e:
             r1 = Rectangle(1, 2, 3, 4, 5, 7)
-        self.assertEqual(str(e.exception), '__init__() takes from 3 to 6 positional arguments but 7 were given')
+        self.assertEqual(
+            str(e.exception),
+            "'__init__() takes from 3 to 6" +
+            "positional arguments but 7 were given'")
 
     def test_singlerectanglecreation(self):
         """This function tests for single instance creation"""
@@ -250,28 +259,28 @@ on"""
         """This function tests for bad size value with sets"""
         Rectangle.reset_objects()
         with self.assertRaises(TypeError) as e:
-            r1 = Rectangle({"foo" : 1}, 1, 2, 3, 7)
+            r1 = Rectangle({"foo": 1}, 1, 2, 3, 7)
         self.assertEqual(str(e.exception), 'width must be an integer')
 
     def test_badheightvaluedicts(self):
         """This function tests for bad size value with sets"""
         Rectangle.reset_objects()
         with self.assertRaises(TypeError) as e:
-            r1 = Rectangle(1, {"foo" : 1}, 1, 2, 7)
+            r1 = Rectangle(1, {"foo": 1}, 1, 2, 7)
         self.assertEqual(str(e.exception), 'height must be an integer')
 
     def test_badxvaluewithdicts(self):
         """This function tests for bad x value with dicts"""
         Rectangle.reset_objects()
         with self.assertRaises(TypeError) as e:
-            r1 = Rectangle(1, 2, {"foo" : 1}, 2, 3)
+            r1 = Rectangle(1, 2, {"foo": 1}, 2, 3)
         self.assertEqual(str(e.exception), 'x must be an integer')
 
     def test_badyvaluewithdicts(self):
         """This function tests for bad y value with dicts"""
         Rectangle.reset_objects()
         with self.assertRaises(TypeError) as e:
-            r1 = Rectangle(2, 1, 2, {"foo" : 1}, 3)
+            r1 = Rectangle(2, 1, 2, {"foo": 1}, 3)
         self.assertEqual(str(e.exception), 'y must be an integer')
 
     def test_badwidthvaluefuncs(self):
@@ -309,12 +318,78 @@ on"""
             r1 = Rectangle(False, "foo", {"str": 7}, ("hello", ), True)
         self.assertEqual(str(e.exception), 'width must be an integer')
 
-    def test_NaN(self):
-        """This function tests for NaN"""
+    def test_NaNwidth(self):
+        """This function tests for NaN x value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Rectangle(float('nan'), 10, 5, 7, 7)
+        self.assertEqual(str(e.exception), 'width must be an integer')
+
+    def test_NaNheight(self):
+        """This function tests for NaN height value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Rectangle(10, float('nan'), 5, 7, 7)
+        self.assertEqual(str(e.exception), 'height must be an integer')
+
+    def test_NaNx(self):
+        """This function tests for NaN x value"""
         Rectangle.reset_objects()
         with self.assertRaises(TypeError) as e:
             r1 = Rectangle(10, 10, float('nan'), 5, 7)
         self.assertEqual(str(e.exception), 'x must be an integer')
+
+    def test_NaNy(self):
+        """This function tests for NaN y value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Rectangle(10, 10, 5, float('nan'), 7)
+        self.assertEqual(str(e.exception), 'y must be an integer')
+
+    def test_NaNall(self):
+        """This function tests for all NaN values"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Rectangle(
+                float('nan'), float('nan'),  float('nan'), float('nan'),
+                float('nan'))
+        self.assertEqual(str(e.exception), 'width must be an integer')
+
+    def test_infwidth(self):
+        """This function tests for NaN height value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Rectangle(float('Inf'), 10, 5, 7, 7)
+        self.assertEqual(str(e.exception), 'width must be an integer')
+
+    def test_infheight(self):
+        """This function tests for inf height value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Rectangle(10, float('Inf'), 5, 7, 7)
+        self.assertEqual(str(e.exception), 'height must be an integer')
+
+    def test_infx(self):
+        """This function tests for inf x value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Rectangle(10, 10, float('Inf'), 5, 7)
+        self.assertEqual(str(e.exception), 'x must be an integer')
+
+    def test_infy(self):
+        """This function tests for inf y value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Rectangle(10, 10, 5, float('Inf'), 7)
+        self.assertEqual(str(e.exception), 'y must be an integer')
+
+    def test_infall(self):
+        """This function tests for all inf value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Rectangle(float('Inf'), float('Inf'),  float('Inf'),
+                           float('Inf'),  float('Inf'))
+        self.assertEqual(str(e.exception), 'width must be an integer')
 
     def test_inf(self):
         """This function tests for NaN"""
@@ -395,7 +470,6 @@ on"""
             r1.width = "foo"
         self.assertEqual(str(e.exception), 'width must be an integer')
 
-
     def test_heightsettervalidation(self):
         """This function tests height setter validation"""
         Rectangle.reset_objects()
@@ -471,7 +545,10 @@ on"""
         Rectangle.reset_objects()
         with self.assertRaises(AttributeError) as e:
             print(Rectangle.__nb_objects)
-        self.assertEqual(str(e.exception),"type object \'Rectangle\' has no attribute \'_TestBaseClass__nb_objects\'")
+        self.assertEqual(
+            str(e.exception),
+            "type object \'Rectangle\' has no attribute \'_TestBaseClass__n" +
+            "b_objects\'")
 
     def test_recprivatewidthvariable(self):
         """This function tests width being private"""
@@ -479,7 +556,9 @@ on"""
         r1 = Rectangle(25, 20, 30, 35, 100)
         with self.assertRaises(AttributeError) as e:
             print(r1.__width)
-        self.assertEqual(str(e.exception),"\'Rectangle\' object has no attribute \'_TestBaseClass__width\'")
+        self.assertEqual(
+            str(e.exception),
+            "\'Rectangle\' object has no attribute \'_TestBaseClass__width\'")
 
     def test_recprivateheightvariable(self):
         """This function tests height being private"""
@@ -487,7 +566,9 @@ on"""
         r1 = Rectangle(25, 20, 30, 35, 100)
         with self.assertRaises(AttributeError) as e:
             print(r1.__height)
-        self.assertEqual(str(e.exception),"\'Rectangle\' object has no attribute \'_TestBaseClass__height\'")
+        self.assertEqual(
+            str(e.exception),
+            "\'Rectangle\' object has no attribute \'_TestBaseClass__height\'")
 
     def test_recprivatexvariable(self):
         """This function tests width being private"""
@@ -495,7 +576,9 @@ on"""
         r1 = Rectangle(25, 20, 30, 35, 100)
         with self.assertRaises(AttributeError) as e:
             print(r1.__x)
-        self.assertEqual(str(e.exception),"\'Rectangle\' object has no attribute \'_TestBaseClass__x\'")
+        self.assertEqual(
+            str(e.exception),
+            "\'Rectangle\' object has no attribute \'_TestBaseClass__x\'")
 
     def test_recprivateyvariable(self):
         """This function tests width being private"""
@@ -503,7 +586,9 @@ on"""
         r1 = Rectangle(25, 20, 30, 35, 100)
         with self.assertRaises(AttributeError) as e:
             print(r1.__y)
-        self.assertEqual(str(e.exception),"\'Rectangle\' object has no attribute \'_TestBaseClass__y\'")
+        self.assertEqual(
+            str(e.exception),
+            "\'Rectangle\' object has no attribute \'_TestBaseClass__y\'")
 
     def test_publicareamethod(self):
         """This function tests the public area method"""
@@ -565,8 +650,7 @@ on"""
         r1 = Rectangle(10, 10, 10, 10, 10)
         with self.assertRaises(TypeError) as e:
             r1.update(89, "foo")
-        self.assertEqual(str(e.exception),"width must be an integer")
-
+        self.assertEqual(str(e.exception), "width must be an integer")
 
     def test_updateheightbadvalue(self):
         """This function tests updating width with bad value"""
@@ -574,7 +658,7 @@ on"""
         r1 = Rectangle(10, 10, 10, 10, 10)
         with self.assertRaises(TypeError) as e:
             r1.update(89, 15, "foo")
-        self.assertEqual(str(e.exception),"height must be an integer")
+        self.assertEqual(str(e.exception), "height must be an integer")
 
     def test_updatexbadvalue(self):
         """This function tests updating width with bad value"""
@@ -582,7 +666,7 @@ on"""
         r1 = Rectangle(10, 10, 10, 10, 10)
         with self.assertRaises(TypeError) as e:
             r1.update(89, 15, 20, "foo")
-        self.assertEqual(str(e.exception),"x must be an integer")
+        self.assertEqual(str(e.exception), "x must be an integer")
 
     def test_updateybadvalue(self):
         """This function tests updating width with bad value"""
@@ -590,7 +674,7 @@ on"""
         r1 = Rectangle(10, 10, 10, 10, 10)
         with self.assertRaises(TypeError) as e:
             r1.update(89, 15, 20, 25, "foo")
-        self.assertEqual(str(e.exception),"y must be an integer")
+        self.assertEqual(str(e.exception), "y must be an integer")
 
     def test_updatekwargswidth(self):
         """This function tests updating width with kwargs"""
@@ -666,18 +750,21 @@ on"""
         self.assertEqual(r1.y, 10)
 
     def test_errorfortoomanyarguments(self):
-        """This function tests that Valueerror is thrown when extra arguments"""
+        """This function tests that Valueerror is thrown when extra args"""
         Rectangle.reset_objects()
         with self.assertRaises(TypeError) as e:
             r1 = Rectangle(1, 2, 3, 4, 5, 6)
-        self.assertEqual(str(e.exception), '__init__() takes from 3 to 6 positional arguments but 7 were given')
-
+        self.assertEqual(
+            str(e.exception),
+            "__init__() takes from 3 to 6 positional " +
+            "arguments but 7 were given")
 
     def test_to_dictionary(self):
         """This function tests the to_dictionary function"""
         r1 = Rectangle(10, 2, 1, 9)
         r1_dictionary = r1.to_dictionary()
-        self.assertEqual(r1_dictionary, {'x': 1, 'y': 9, 'id': 1, 'height': 2, 'width': 10})
+        self.assertEqual(r1_dictionary, {'x': 1, 'y': 9, 'id': 1, 'height': 2,
+                                         'width': 10})
 
     def test_updatewithdict(self):
         """This function tests the to_dictionary function"""

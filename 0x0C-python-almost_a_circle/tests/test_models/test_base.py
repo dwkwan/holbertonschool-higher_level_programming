@@ -7,32 +7,37 @@ from models.base import Base
 from models.rectangle import Rectangle
 from models.square import Square
 
+
 class TestBaseClass(unittest.TestCase):
     """This class allows for testing of Base class"""
     def test_singleinstancecreationwithoutid(self):
         """This function tests for multiple instance creation"""
         Base.reset_objects()
-        b1 = Base( )
+        b1 = Base()
         self.assertEqual(b1.id, 1)
+
     def test_multipleinstancecreationwithoutid(self):
         """This function tests for multiple instance creation"""
         Base.reset_objects()
-        b1 = Base( )
-        b2 = Base( )
-        b3 = Base( )
+        b1 = Base()
+        b2 = Base()
+        b3 = Base()
         self.assertEqual(b1.id, 1)
         self.assertEqual(b2.id, 2)
         self.assertEqual(b3.id, 3)
+
     def test_instancecreationwithid(self):
         """This function tests for 1 instance creation with id"""
         Base.reset_objects()
         b1 = Base(12)
         self.assertEqual(b1.id, 12)
+
     def test_instancecreationwithstringid(self):
         """This function tests for one instance creation with id"""
         Base.reset_objects()
         b1 = Base("foo")
         self.assertEqual(b1.id, "foo")
+
     def test_multipleinstancecreationwithid(self):
         """This function tests for multiple instance creation with id"""
         Base.reset_objects()
@@ -40,17 +45,20 @@ class TestBaseClass(unittest.TestCase):
         self.assertEqual(b1.id, 15)
         b2 = Base(20)
         self.assertEqual(b2.id, 20)
+
     def test_Noneid(self):
         """This function tests for None argument"""
         Base.reset_objects()
         b1 = Base(None)
         self.assertEqual(b1.id, 1)
+
     def test_privateclassvariable(self):
         """This function tests __nb_objects being private"""
         Base.reset_objects()
         with self.assertRaises(AttributeError) as e:
             print(Base.__nb_objects)
-        self.assertEqual(str(e.exception), "type object 'Base' has no attribute '_TestBaseClass__nb_objects'")
+        self.assertEqual(str(e.exception), "type object 'Base' has no attrib" +
+                         "ute '_TestBaseClass__nb_objects'")
 
     def test_duplicateid(self):
         """Test that duplicate ids are allowed"""
@@ -66,19 +74,9 @@ class TestBaseClass(unittest.TestCase):
         r1 = Rectangle(10, 7, 2, 8)
         dictionary = r1.to_dictionary()
         json_dictionary = Base.to_json_string([dictionary])
-        self.assertEqual(len(json_dictionary), len('[{"x": 2, "width": 10, "id": 1, "height": 7, "y": 8}]'))
-
-    def test_to_json_stringwithmultipledicts(self):
-        """This function tests the to_json_string func"""
-        Base.reset_objects()
-        list_dictionaries = []
-        r1 = Rectangle(10, 7, 2, 8)
-        r2 = Rectangle(9, 3, 1, 7)
-        list_dictionaries.append(r1.to_dictionary())
-        list_dictionaries.append(r2.to_dictionary())
-        json_dictionary = Base.to_json_string(list_dictionaries)
-        self.assertEqual(len(json_dictionary), len('[{"x": 2, "width": 10, "id": 1, "height": 7, "y": 8}, {"x": 1, "width": 9, "id": 2, "height": 3, "y": 7}]'))
-        self.assertEqual(type(json_dictionary), str)
+        self.assertEqual(
+            len(json_dictionary),
+            len('[{"x": 2, "width": 10, "id": 1, "height": 7, "y": 8}]'))
 
     def test_to_json_string_withNonearg(self):
         """This function tests the to_json_string func with None argument"""
@@ -86,25 +84,19 @@ class TestBaseClass(unittest.TestCase):
         self.assertEqual(json_dictionary, "[]")
         self.assertEqual(type(json_dictionary), str)
 
-    def test_save_to_filewithrec(self):
-        """This function tests the save_to_file func with None argument"""
-        Base.reset_objects()
-        r1 = Rectangle(10, 7, 2, 8)
-        r2 = Rectangle(2, 4)
-        Rectangle.save_to_file([r1, r2])
-        with open("Rectangle.json", "r") as file:
-            str = file.read()
-        self.assertEqual(len(str), len('[{"y": 8, "x": 2, "id": 1, "width": 10, "height": 7}, {"y": 0, "x": 0, "id": 2, "width": 2, "height": 4}]'))
+    def test_to_json_string_withNaN(self):
+        """This function tests the to_json_string func with NaN argument"""
+        with self.assertRaises(TypeError) as e:
+            json_dictionary = Base.to_json_string(float('nan'))
+        self.assertEqual(str(e.exception), "object of type \'float\'" +
+                         " has no len()")
 
-    def test_save_to_filewithsquare(self):
-        """This function tests the save_to_file func with None argument"""
-        Base.reset_objects()
-        s1 = Square(10, 7, 2, 8)
-        s2 = Square(2, 4)
-        Square.save_to_file([s1, s2])
-        with open("Square.json", "r") as file:
-            str = file.read()
-        self.assertEqual(len(str), len('[{"y": 8, "x": 2, "id": 1, "size": 10}, {"y": 0, "x": 0, "id": 2, "size": 2}]'))
+    def test_to_json_string_withinf(self):
+        """This function tests the to_json_string func with inf argument"""
+        with self.assertRaises(TypeError) as e:
+            json_dictionary = Base.to_json_string(float('inf'))
+        self.assertEqual(
+            str(e.exception), 'object of type \'float\' has no len()')
 
     def test_save_to_filewithNonearg(self):
         """This function tests the save_to_file func with None argument"""
@@ -116,18 +108,26 @@ class TestBaseClass(unittest.TestCase):
             str = file.read()
         self.assertEqual(len(str), len('[]'))
 
+    def test_save_to_filewithNaNearg(self):
+        """This function tests the save_to_file func with None argument"""
+        with self.assertRaises(TypeError) as e:
+            json_dictionary = Base.to_json_string(float('nan'))
+        self.assertEqual(str(e.exception),
+                         'object of type \'float\' has no len()')
+
     def test_from_json_string(self):
         """This function tests the from_json_string func"""
         Base.reset_objects()
         list_input = [
-        {'id': 89, 'width': 10, 'height': 4},
-        {'id': 7, 'width': 1, 'height': 7}
+            {'id': 89, 'width': 10, 'height': 4},
+            {'id': 7, 'width': 1, 'height': 7}
         ]
         json_list_input = Rectangle.to_json_string(list_input)
         list_output = Rectangle.from_json_string(json_list_input)
-        self.assertEqual(list_output, [{"height": 4, "width": 10, "id": 89}, {"height": 7, "width": 1, "id": 7}])
+        self.assertEqual(list_output,
+                         [{"height": 4, "width": 10, "id": 89},
+                          {"height": 7, "width": 1, "id": 7}])
         self.assertEqual(type(list_output), list)
-
 
     def test_from_json_stringwithemptyjsonstring(self):
         """This function tests the from_json_string func"""

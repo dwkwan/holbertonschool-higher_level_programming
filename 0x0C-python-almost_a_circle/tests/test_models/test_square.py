@@ -8,6 +8,8 @@ import contextlib
 from models.square import Square
 from models.base import Base
 from models.rectangle import Rectangle
+
+
 class TestBaseClass(unittest.TestCase):
     """This class allows for testing of Base class"""
     def test_SquareinheritancefromBase(self):
@@ -31,14 +33,19 @@ class TestBaseClass(unittest.TestCase):
         Square.reset_objects()
         with self.assertRaises(TypeError) as e:
             s1 = Square()
-        self.assertEqual(str(e.exception), "__init__() missing 1 required positional argument: 'size'")
+        self.assertEqual(
+            str(e.exception),
+            "__init__() missing 1 required positional argument: 'size'")
 
     def test_errorfortoomanyarguments(self):
         """This function tests that Typeerror is thrown when 0 arguments"""
         Square.reset_objects()
         with self.assertRaises(TypeError) as e:
             s1 = Square(1, 2, 3, 4, 5)
-        self.assertEqual(str(e.exception), "__init__() takes from 2 to 5 positional arguments but 6 were given")
+        self.assertEqual(
+            str(e.exception),
+            "__init__() takes from 2 to 5 positional" +
+            " arguments but 6 were given")
 
     def test_singlesquarecreation(self):
         """This function tests for single instance creation"""
@@ -71,8 +78,6 @@ class TestBaseClass(unittest.TestCase):
         self.assertEqual(s2.x, 10)
         self.assertEqual(s2.y, 10)
         self.assertEqual(s2.id, 10)
-
-
 
     def test_multiplesquarecreationwithallvalues(self):
         """This function tests for single instance creation"""
@@ -214,21 +219,21 @@ class TestBaseClass(unittest.TestCase):
         """This function tests for bad size value with sets"""
         Rectangle.reset_objects()
         with self.assertRaises(TypeError) as e:
-            r1 = Square({"foo" : 1}, 1, 2, 3)
+            r1 = Square({"foo": 1}, 1, 2, 3)
         self.assertEqual(str(e.exception), 'width must be an integer')
 
     def test_badxvaluewithdicts(self):
         """This function tests for bad x value with dicts"""
         Rectangle.reset_objects()
         with self.assertRaises(TypeError) as e:
-            r1 = Square(1, {"foo" : 1}, 2, 3)
+            r1 = Square(1, {"foo": 1}, 2, 3)
         self.assertEqual(str(e.exception), 'x must be an integer')
 
     def test_badyvaluewithdicts(self):
         """This function tests for bad y value with dicts"""
         Rectangle.reset_objects()
         with self.assertRaises(TypeError) as e:
-            r1 = Square(1, 2, {"foo" : 1}, 3)
+            r1 = Square(1, 2, {"foo": 1}, 3)
         self.assertEqual(str(e.exception), 'y must be an integer')
 
     def test_badsizevaluefuncs(self):
@@ -251,6 +256,64 @@ class TestBaseClass(unittest.TestCase):
         with self.assertRaises(TypeError) as e:
             r1 = Square(1, 2, print(), 3)
         self.assertEqual(str(e.exception), 'y must be an integer')
+
+    def test_NaNsize(self):
+        """This function tests for NaN x value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Square(float('nan'), 10, 5, 7)
+        self.assertEqual(str(e.exception), 'width must be an integer')
+
+    def test_NaNx(self):
+        """This function tests for NaN x value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Square(10, float('nan'), 5, 7)
+        self.assertEqual(str(e.exception), 'x must be an integer')
+
+    def test_NaNy(self):
+        """This function tests for NaN y value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Square(10, 10, float('nan'), 7)
+        self.assertEqual(str(e.exception), 'y must be an integer')
+
+    def test_NaNall(self):
+        """This function tests for all NaN values"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Square(
+                float('nan'), float('nan'),  float('nan'), float('nan'))
+        self.assertEqual(str(e.exception), 'width must be an integer')
+
+    def test_infsize(self):
+        """This function tests for inf size value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Square(float('Inf'), 10, 5, 7)
+        self.assertEqual(str(e.exception), 'width must be an integer')
+
+    def test_infx(self):
+        """This function tests for inf x value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Square(10, float('Inf'), 5, 7)
+        self.assertEqual(str(e.exception), 'x must be an integer')
+
+    def test_infy(self):
+        """This function tests for inf y value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Square(10, 10, float('Inf'), 7)
+        self.assertEqual(str(e.exception), 'y must be an integer')
+
+    def test_infall(self):
+        """This function tests for all inf value"""
+        Rectangle.reset_objects()
+        with self.assertRaises(TypeError) as e:
+            r1 = Square(
+                float('Inf'), float('Inf'),  float('Inf'), float('Inf'))
+        self.assertEqual(str(e.exception), 'width must be an integer')
 
     def test_sizegetter(self):
         """This function tests the size getter"""
@@ -299,7 +362,7 @@ class TestBaseClass(unittest.TestCase):
         with self.assertRaises(TypeError) as e:
             r1 = Square(1, 2, 2, 3)
             self.assertEqual(r1.size, 1)
-            r1.size = {"foo" : 2}
+            r1.size = {"foo": 2}
         self.assertEqual(str(e.exception), "width must be an integer")
 
     def test_sizesetterwithset(self):
@@ -401,7 +464,6 @@ class TestBaseClass(unittest.TestCase):
         s1 = Square(10, 2, 1)
         s1_dictionary = s1.to_dictionary()
         self.assertEqual(s1_dictionary, {'id': 1, 'x': 2, 'size': 10, 'y': 1})
-
 
     def test_updatewithdict(self):
         """This function tests the update function with to_dict"""
