@@ -14,8 +14,10 @@ class Base:
     attr2(id): object id
     """
     __nb_objects = 0
+
     def reset_objects():
         Base.__nb_objects = 0
+
     def __init__(self, id=None):
         """Initiliazes an instance"""
         if id is not None:
@@ -28,24 +30,24 @@ class Base:
     def save_to_file(cls, list_objs):
         """writes the JSON string representation of list_objs to a file"""
         list_dictionaries = []
-        if list_objs == None:
-            with open(cls.__name__ + ".json","w",  encoding='utf-8') as file:
+        if list_objs is None:
+            with open(cls.__name__ + ".json", "w",  encoding='utf-8') as file:
                 file.write(Base.to_json_string(list_dictionaries))
             return
         for model in list_objs:
             list_dictionaries.append(model.to_dictionary())
-        with open(cls.__name__ + ".json","w",  encoding='utf-8') as file:
+        with open(cls.__name__ + ".json", "w",  encoding='utf-8') as file:
             file.write(Base.to_json_string(list_dictionaries))
 
     @staticmethod
     def to_json_string(list_dictionaries):
-        if list_dictionaries == None or len(list_dictionaries) == 0:
+        if list_dictionaries is None or len(list_dictionaries) is 0:
             return "[]"
         return json.dumps(list_dictionaries)
 
     @staticmethod
     def from_json_string(json_string):
-        if json_string == None:
+        if json_string is None:
             return []
         return json.loads(json_string)
 
@@ -65,7 +67,7 @@ class Base:
     def load_from_file(cls):
         if path.exists(cls.__name__ + ".json") is False:
             return []
-        with open(cls.__name__ + ".json","r",  encoding='utf-8') as file:
+        with open(cls.__name__ + ".json", "r",  encoding='utf-8') as file:
             listofinstances = []
             objectlist = cls.from_json_string(file.read())
             for dict in objectlist:
