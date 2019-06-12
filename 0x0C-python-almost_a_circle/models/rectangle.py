@@ -49,9 +49,9 @@ class Rectangle(Base):
         if not args or count < 1:
             for key, value in kwargs.items():
                 for i in range(len(attrs)):
-                    if key == attrs[i] and type(value) == int:
+                    if key == attrs[i]:
                         setattr(self, attrs[i], value)
-        elif args and  all(type(x) is int for x in args):
+        elif args:
             for i in range(count):
                 setattr(self, attrs[i], args[i])
 
