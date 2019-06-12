@@ -519,3 +519,14 @@ class TestBaseClass(unittest.TestCase):
         with contextlib.redirect_stdout(f):
             s3.display()
         self.assertEqual(f.getvalue(), "\n\n\n ###\n ###\n ###\n")
+
+    def test_area_method(self):
+        s3 = Square(3, 1, 3)
+        self.assertEqual(s3.area(), 9)
+
+    def test_area_methodwithargthrowerror(self):
+        s3 = Square(3, 1, 3)
+        with self.assertRaises(TypeError) as e:
+            s3.area(9)
+        self.assertEqual(str(e.exception),
+                         "area() takes 1 positional argument but 2 were given")

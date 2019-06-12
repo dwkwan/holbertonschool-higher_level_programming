@@ -596,6 +596,13 @@ on"""
         r1 = Rectangle(5, 10, 7, 9, 100)
         self.assertEqual(r1.area(), 50)
 
+    def test_area_methodwithargthrowerror(self):
+        s3 = Rectangle(3, 1, 3)
+        with self.assertRaises(TypeError) as e:
+            s3.area(9)
+        self.assertEqual(str(e.exception),
+                         "area() takes 1 positional argument but 2 were given")
+
     def test_updateid(self):
         """This function tests the public area method"""
         Rectangle.reset_objects()
