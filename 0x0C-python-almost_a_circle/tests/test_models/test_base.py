@@ -173,10 +173,3 @@ class TestBaseClass(unittest.TestCase):
         self.assertEqual(list_rectangles_output[1].height,  r2.height)
         self.assertEqual(list_rectangles_output[1].x,  r2.x)
         self.assertEqual(list_rectangles_output[1].y,  r2.y)
-
-    def test_loadfromfilewithnonexistantfile(self):
-        Base.reset_objects()
-        list_rectangles_output = Rectangle.load_from_file()
-        self.assertEqual(type(list_rectangles_output), list)
-        self.assertEqual(print(list_rectangles_output[0]), None)
-        self.assertEqual(print(list_rectangles_output[1]), None)
