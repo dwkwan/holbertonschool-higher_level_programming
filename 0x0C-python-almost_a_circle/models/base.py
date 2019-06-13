@@ -109,10 +109,3 @@ class Base:
                     row[key] = int(value)
                 listofinstances.append(cls.create(**row))
         return listofinstances
-
-"""
-            if cls.__name__ == "Rectangle":
-                fieldnames = ['id', 'width', 'height', 'x', 'y']
-            elif cls.__name__ == "Square":
-                fieldnames = ['id', 'size', 'x', 'y']
-"""
