@@ -68,6 +68,20 @@ class TestBaseClass(unittest.TestCase):
         self.assertEqual(r2.id, 2)
         self.assertEqual(r3.id, 3)
 
+    def test_rectanglecreationwith1and2(self):
+        """This function tests for ereationwithtwoattributesset"""
+        Rectangle.reset_objects()
+        r1 = Rectangle(1, 2)
+        self.assertEqual(r1.width, 1)
+        self.assertEqual(r1.height, 2)
+
+    def test_rectanglecreationwithheight0(self):
+        """This function tests for height set to 0"""
+        Rectangle.reset_objects()
+        with self.assertRaises(ValueError) as e:
+            r1 = Rectangle(1, 0)
+        self.assertEqual(str(e.exception), 'height must be > 0')
+
     def test_singlerectanglecreationwithallvalues(self):
         """This function tests for single instance creati\
 on"""

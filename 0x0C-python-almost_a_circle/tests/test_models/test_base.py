@@ -2,6 +2,8 @@
 """Unittest for Base class"""
 
 import json
+import os
+from os import path
 import unittest
 from models.base import Base
 from models.rectangle import Rectangle
@@ -157,6 +159,7 @@ class TestBaseClass(unittest.TestCase):
         self.assertEqual(r1 == r2, False)
 
     def test_loadfromfile(self):
+        os.remove("Rectangle.json")
         Base.reset_objects()
         r1 = Rectangle(10, 7, 2, 8)
         r2 = Rectangle(2, 4)
@@ -194,6 +197,38 @@ class TestBaseClass(unittest.TestCase):
             str = file.read()
         self.assertEqual(len(str), 105)
 
+    def test_save_to_filewithemptylist(self):
+        """This function tests the save_to_file func with empty"""
+        Base.reset_objects()
+        Rectangle.save_to_file([])
+        with open("Rectangle.json", "r") as file:
+            str = file.read()
+        self.assertEqual(len(str), 2)
+
+    def test_save_to_filewithNoneargsquare(self):
+        """This function tests the save_to_file func None"""
+        os.remove("Square.json")
+        Square.save_to_file(None)
+        with open("Square.json", "r") as file:
+            str = file.read()
+        self.assertEqual(len(str), 2)
+
+    def test_save_to_filewithemptylist(self):
+        """This function tests the save_to_file func with empty list arg"""
+        os.remove("Square.json")
+        Square.save_to_file([])
+        with open("Square.json", "r") as file:
+            str = file.read()
+        self.assertEqual(len(str), 2)
+
+    def test_save_to_filewith1object(self):
+        """This function tests the save_to_file func with 1 object"""
+        os.remove("Square.json")
+        Square.save_to_file([Square(1)])
+        with open("Square.json", "r") as file:
+            str = file.read()
+        self.assertEqual(len(str), 38)
+
     def test_to_json_stringwithmultipledicts(self):
         """This function tests the to_json_string func"""
         Base.reset_objects()
@@ -205,3 +240,39 @@ class TestBaseClass(unittest.TestCase):
         json_dictionary = Base.to_json_string(list_dictionaries)
         self.assertEqual(len(json_dictionary), 105)
         self.assertEqual(type(json_dictionary), str)
+
+    def test_Squarecreatewithjustid(self):
+        """This function tests the create func"""
+        Base.reset_objects()
+        s1 = Square.create(**{'id': 89})
+        self.assertEqual(s1.id, 89)
+        self.assertEqual(s1.size, 1)
+        self.assertEqual(s1.x, 0)
+        self.assertEqual(s1.y, 0)
+
+    def test_Squarecreatewithidandsize(self):
+        """This function tests the create func"""
+        Base.reset_objects()
+        s1 = Square.create(**{'id': 89, 'size': 1})
+        self.assertEqual(s1.id, 89)
+        self.assertEqual(s1.size, 1)
+        self.assertEqual(s1.x, 0)
+        self.assertEqual(s1.y, 0)
+
+    def test_Squarecreatewithidsize(self):
+        """This function tests the create func"""
+        Base.reset_objects()
+        s1 = Square.create(**{'id': 89, 'size': 1, 'x': 2})
+        self.assertEqual(s1.id, 89)
+        self.assertEqual(s1.size, 1)
+        self.assertEqual(s1.x, 2)
+        self.assertEqual(s1.y, 0)
+
+    def test_Squarecreatewithidsizexy(self):
+        """This function tests the create func"""
+        Base.reset_objects()
+        s1 = Square.create(**{'id': 89, 'size': 1, 'x': 2, 'y': 3})
+        self.assertEqual(s1.id, 89)
+        self.assertEqual(s1.size, 1)
+        self.assertEqual(s1.x, 2)
+        self.assertEqual(s1.y, 3)

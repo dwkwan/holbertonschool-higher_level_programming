@@ -47,6 +47,34 @@ class TestBaseClass(unittest.TestCase):
             "__init__() takes from 2 to 5 positional" +
             " arguments but 6 were given")
 
+    def test_negativesize(self):
+        """This function tests that Typeerror is thrown when 0 arguments"""
+        Square.reset_objects()
+        with self.assertRaises(ValueError) as e:
+            s1 = Square(-1)
+        self.assertEqual(str(e.exception), "width must be > 0")
+
+    def test_negativexvalue(self):
+        """This function tests that ValueError is thrown for - x value"""
+        Square.reset_objects()
+        with self.assertRaises(ValueError) as e:
+            s1 = Square(1, -2)
+        self.assertEqual(str(e.exception), "x must be >= 0")
+
+    def test_negativeyvalue(self):
+        """This function tests that ValueError is thrown for - y value"""
+        Square.reset_objects()
+        with self.assertRaises(ValueError) as e:
+            s1 = Square(1, 2, -2)
+        self.assertEqual(str(e.exception), "y must be >= 0")
+
+    def test_0size(self):
+        """This function tests that ValueError is thrown for 0 size value"""
+        Square.reset_objects()
+        with self.assertRaises(ValueError) as e:
+            s1 = Square(0)
+        self.assertEqual(str(e.exception), "width must be > 0")
+
     def test_singlesquarecreation(self):
         """This function tests for single instance creation"""
         Square.reset_objects()
