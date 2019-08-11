@@ -13,8 +13,8 @@ if __name__ == "__main__":
     Session = sessionmaker(bind=engine)
     session = Session()
     try:
-        print("{:}: ".format(session.query(State).order_by(State.id).first().id),
-              end="")
+        print("{:}: ".format(session.query(State).order_by(
+            State.id).first().id), end="")
         print(session.query(State).order_by(State.id).first().name)
     except:
         print("Nothing")
