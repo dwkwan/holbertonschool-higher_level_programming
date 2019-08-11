@@ -13,8 +13,6 @@ if __name__ == "__main__":
     query = query + " WHERE states.name = %s ORDER BY cities.id ASC"
     cur.execute(query, [sys.argv[4]])
     query_rows = cur.fetchall()
-    for row in range(len(query_rows) - 1):
-        print("{}, ".format(query_rows[row][0]), end="")
-    print(query_rows[len(query_rows) - 1][0])
+    print(", ".join([row[0] for row in query_rows]))
     cur.close()
     conn.close()
