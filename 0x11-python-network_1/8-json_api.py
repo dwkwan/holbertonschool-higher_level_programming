@@ -17,6 +17,6 @@ if __name__ == "__main__":
             print("[{:}] {:}".format(json_dict.get('id'), json_dict.get(
                 'name')))
         else:
-            print("No Result")
+            print("No result")
     except:
         print("Not a valid JSON")
