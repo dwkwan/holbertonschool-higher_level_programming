@@ -9,7 +9,10 @@ if __name__ == "__main__":
     r = requests.get(
         'https://api.github.com/repos/{:}/{:}/commits'.format(
             owner_name, repository_name)).json()
-    for item in range(len(r)):
-        if item < 10:
-            print("{:}: {:}".format(r[item].get('sha'), r[item].get(
-                'commit').get('committer').get('name')))
+    if len(r) > 10:
+        limit = 10
+    else:
+        limit = len(r)
+    for item in range(limit):
+        print("{:}: {:}".format(r[item].get('sha'), r[item].get(
+            'commit').get('committer').get('name')))
