@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""takes your Github credentials (username and password) and uses the Github
-API to display your id
-"""
+"""takes your Github credentials (username and password)"""
 import requests
 from sys import argv
 
