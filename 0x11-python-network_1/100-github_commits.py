@@ -3,10 +3,9 @@
 import requests
 from sys import argv
 
-repository_name = argv[1]
-owner_name = argv[2]
-
 if __name__ == "__main__":
+    repository_name = argv[1]
+    owner_name = argv[2]
     r = requests.get(
         'https://api.github.com/repos/{:}/{:}/commits?per_page=10'.format(
             owner_name, repository_name)).json()
