@@ -15,4 +15,4 @@ if __name__ == "__main__":
         limit = len(r)
     for item in range(limit):
         print("{:}: {:}".format(r[item].get('sha'), r[item].get(
-            'commit').get('committer').get('name')))
+            'commit').get('author').get('name')))
