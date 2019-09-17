@@ -1,23 +1,18 @@
 #!/usr/bin/node
 if (process.argv.length < 4) {
-  console.log(0);
+  console.log('0');
 } else {
-  const part = process.argv.slice(2);
+  const mod = process.argv.slice(2);
   let i;
-  let position;
-  let second;
-  let max = part[0];
-  for (i = 0; i < part.length; i++) {
-    if (part[i] > max) {
-      max = part[i];
-      position = i;
+  let first = Number.MIN_VALUE;
+  let second = Number.MIN_VALUE;
+  for (i = 0; i < mod.length; i++) {
+    if (mod[i] > first) {
+      second = first;
+      first = mod[i];
     }
-  }
-  second = part[0];
-  for (i = 0; i < part.length; i++) {
-    if (part[i] > second & i !== position) {
-      console.log(part[i]);
-      second = part[i];
+    if (first > mod[i] > second) {
+      second = mod[i];
     }
   }
   console.log(second);
