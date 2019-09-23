@@ -1,5 +1,5 @@
 #!/usr/bin/node
 exports.logMe = (function (item) {
-  let counter = 0;
-  return function (item) { console.log(item + ': ' + counter); counter += 1; };
+  let counter = -1;
+  return function (item) { counter += 1; console.log(counter + ': ' + item);};
 })();
