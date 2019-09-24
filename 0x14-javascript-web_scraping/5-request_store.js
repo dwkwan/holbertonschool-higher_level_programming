@@ -9,6 +9,5 @@ request(url, function (response, body) {
     if (err) {
       console.log(err);
     }
-  })
-  ;
+  });
 });
