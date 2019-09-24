@@ -3,9 +3,9 @@ const request = require('request');
 const fs = require('fs');
 const url = process.argv[2];
 let text;
-request(url, function (response, body) {
-  text = body.body;
-  fs.writeFile(process.argv[3], text, 'utf-8', (err, data) => {
+request(url, function (response, b) {
+  text = b.body;
+  fs.writeFile(process.argv[3], text, 'utf-8', (err) => {
     if (err) {
       console.log(err);
     }
