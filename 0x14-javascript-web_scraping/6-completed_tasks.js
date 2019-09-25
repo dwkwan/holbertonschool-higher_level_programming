@@ -6,17 +6,21 @@ let i = 0;
 const countDict = {};
 let key = '';
 
-request(url, function (response, body) {
-  resultList = JSON.parse(body.body);
-  for (i = 0; i < resultList.length; i++) {
-    key = resultList[i].userId;
-    if (resultList[i].completed === true) {
-      if (!countDict[key]) {
-        countDict[key] = 1;
-      } else {
-        countDict[key] += 1;
+request(url, function (error, response, body) {
+  if (error) {
+    console.log(error);
+  } else {
+    resultList = JSON.parse(body);
+    for (i = 0; i < resultList.length; i++) {
+      key = resultList[i].userId;
+      if (resultList[i].completed === true) {
+        if (!countDict[key]) {
+          countDict[key] = 1;
+        } else {
+          countDict[key] += 1;
+        }
       }
     }
+    console.log(countDict);
   }
-  console.log(countDict);
 });
