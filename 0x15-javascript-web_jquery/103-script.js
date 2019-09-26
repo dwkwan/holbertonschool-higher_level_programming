@@ -5,4 +5,10 @@ $(function () {
       $('#hello').html(resp.hello);
     });
   });
+  $('#language_code').on('keypress', function (e) {
+    if (e.which === 13) {
+      $('#btn_translate').click();
+    }
+  }
+  );
 });
